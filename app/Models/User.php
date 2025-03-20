@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function esAdministrador()
+    {
+        return $this->role === 'administrador';
+    }
+
+    public function tareas()
+    {
+        return $this->belongsToMany(Tarea::class, 'usuarios_tareas', 'user_id', 'tarea_id');
+    }
 }
