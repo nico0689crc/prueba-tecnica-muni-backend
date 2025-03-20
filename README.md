@@ -1,66 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gestión de Tareas con Usuarios Múltiples
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descripción del Proyecto
 
-## About Laravel
+El objetivo de este proyecto es desarrollar un sistema de gestión de tareas que permita a los usuarios crear, editar, listar y eliminar tareas. Cada tarea contará con un estado (pendiente, en progreso, completada) y una prioridad (baja, media, alta). Además, las tareas podrán ser asignadas a múltiples usuarios, fomentando la colaboración. El sistema incluirá roles de usuario para gestionar permisos:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Administrador**: Puede gestionar todas las tareas y asignar múltiples usuarios a una tarea.
+- **Usuario estándar**: Solo puede ver y editar las tareas en las que está asignado.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos Funcionales
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Asignación múltiple de usuarios**: Cada tarea puede estar vinculada a uno o más usuarios. Por ejemplo, una tarea de "Preparar reporte" puede ser asignada tanto a Juan como a María.
+2. **Visualización de tareas compartidas**: Los usuarios deben poder ver las tareas en las que están involucrados, junto con los nombres de los demás usuarios asignados.
+3. **Gestión por administrador**: Los administradores pueden agregar o eliminar usuarios de una tarea en cualquier momento.
+4. **Seguimiento de tareas**: Una tarea solo puede marcarse como completada cuando todos los usuarios asignados hayan confirmado que han finalizado su parte.
 
-## Learning Laravel
+## Tecnologías Utilizadas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend**: PHP con XAMPP.
+- **Base de Datos**: MySQL.
+- **Frontend**: HTML, CSS, JavaScript.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Instalación
+1. Inicia el servidor Apache y MySQL desde el panel de control de XAMPP.
+2. Clona este repositorio en tu máquina local:
+  ```bash
+  git clone https://github.com/tu-usuario/tu-repositorio.git
+  ```
+3. Configura el entorno en XAMPP:
+  - Copia los archivos del proyecto en el directorio `htdocs`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Instala las dependencias de Laravel:
+  - Abre una terminal en el directorio del proyecto.
+  - Ejecuta el siguiente comando para instalar las dependencias:
+    ```bash
+    composer install
+    ```
+  - Copia el archivo `.env.example` y renómbralo como `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+  - Genera la clave de la aplicación:
+    ```bash
+    php artisan key:generate
+    ```
+  - Configura las credenciales de la base de datos en el archivo `.env`.
+  - Ejecuta las migraciones para crear las tablas necesarias:
+    ```bash
+    php artisan migrate
+    ```
+  - Ejecuta los seeders para cargar datos iniciales en la base de datos:
+    ```bash
+    php artisan db:seed
+    ```
+  - Inicia el servidor de desarrollo de Laravel:
+    - Ejecuta el siguiente comando para iniciar el servidor:
+      ```bash
+      php artisan serve --host=127.0.0.1 --port=8000
+      ```
+    - Accede al sistema desde tu navegador en `http://127.0.0.1:8000`.
 
-## Laravel Sponsors
+## Licencia
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Este proyecto está bajo la licencia [MIT](LICENSE).
