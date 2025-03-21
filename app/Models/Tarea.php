@@ -8,12 +8,10 @@ class Tarea extends Model
 {
     protected $fillable = ['titulo', 'detalles', 'estado', 'prioridad'];
 
-    protected $hidden = ['pivot'];
-
     protected $with = ['usuarios'];
 
     public function usuarios()
     {
-        return $this->belongsToMany(User::class, 'usuarios_tareas', 'tarea_id', 'user_id');
+        return $this->belongsToMany(User::class, 'usuarios_tareas', 'tarea_id', 'user_id')->withPivot('estado');
     }
 }

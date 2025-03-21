@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tarea;
 use Carbon\Carbon; 
+use Faker\Factory as Faker;
 
 class UsuariosTareasSeeder extends Seeder
 {
@@ -15,26 +16,27 @@ class UsuariosTareasSeeder extends Seeder
      */
     public function run(): void
     {
+        $faker = Faker::create();
         $tareas = Tarea::all();
 
-        // Attach all tasks to the admin user
         $adminUser = User::where('role', 'admin')->first();
         foreach ($tareas as $tarea) {
             $adminUser->tareas()->attach($tarea->id, [
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'estado' => 'finalizado',
             ]);
         }
         
-        // Attach random tasks to standard users
         $estandarsUsers = User::where('role', 'standard')->get();
         foreach ($estandarsUsers as $user) {
-            $randomTareas = $tareas->random(rand(1, 5));
+            $randomTareas = $tareas->random(rand(5, 10));
 
             foreach ($randomTareas as $tarea) {
                 $user->tareas()->attach($tarea->id, [
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
+                    'estado' => $faker->randomElement(['pendiente', 'en_progreso', 'finalizado']),
                 ]);
             }
         }

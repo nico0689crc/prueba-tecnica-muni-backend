@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tarea_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->enum('estado', ['pendiente', 'en_progreso', 'finalizado'])->default('pendiente');
             $table->timestamps();
         });
     }

@@ -14,6 +14,10 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'El campo correo electrónico es obligatorio.',
+            'email.email' => 'El campo correo electrónico debe ser una dirección válida.',
+            'password.required' => 'El campo contraseña es obligatorio.',
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -23,18 +27,21 @@ class AuthController extends Controller
 
             return response()->json([
                 'user' => $user,
-                'token' => $token
+                'token' => $token,
+                'message' => 'Inicio de sesión exitoso. ¡Bienvenido de nuevo!'
             ], 200);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response()->json(['message' => 'Credenciales incorrectas. Por favor, verifica tu correo electrónico y contraseña.'], 401);
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Usuario deslogueado'], 200);
+        return response()->json([
+            'message' => 'Has cerrado sesión exitosamente. ¡Te esperamos pronto!'
+        ], 200);
     }
 
     public function register(Request $request)

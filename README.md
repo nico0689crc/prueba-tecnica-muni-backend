@@ -55,7 +55,7 @@ El objetivo de este proyecto es desarrollar un sistema de gestión de tareas que
   - Inicia el servidor de desarrollo de Laravel:
     - Ejecuta el siguiente comando para iniciar el servidor:
       ```bash
-      php artisan serve --host=127.0.0.1 --port=8000
+      composer dev
       ```
     - Accede al sistema desde tu navegador en `http://127.0.0.1:8000`.
 
