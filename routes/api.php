@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('auth')->group(function () {
-        Route::post('me', [AuthController::class, 'me'])->name('me');
+        Route::get('me', [AuthController::class, 'me'])->name('me');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
         Route::middleware('can:create,App\Models\User')->group(function () {

@@ -12,33 +12,33 @@ class UsersSeeder extends Seeder
     {
       $users = [
         [
-            'first_name' => 'Usuario',
-            'last_name' => 'Administrador',
+            'first_name' => 'Jose Admin',
+            'last_name' => 'Gonzalez',
             'email' => 'administrador@tareas.com',
             'role' => 'admin',
             'password' => 'password',
         ],
         [
-            'first_name' => 'Usuario',
-            'last_name' => 'Estandard 1',
+            'first_name' => 'Juan',
+            'last_name' => 'Perez',
             'email' => 'estandard_1@tareas.com',
             'password' => 'password',
         ],
         [
-            'first_name' => 'Usuario',
-            'last_name' => 'Estandard 2',
+            'first_name' => 'Esteban',
+            'last_name' => 'Gonzalez',
             'email' => 'estandard_2@tareas.com',
             'password' => 'password',
         ],
         [
-            'first_name' => 'Usuario',
-            'last_name' => 'Estandard 3',
+            'first_name' => 'Marcela',
+            'last_name' => 'Gomez',
             'email' => 'estandard_3@tareas.com',
             'password' => 'password',
         ],
         [
-            'first_name' => 'Usuario',
-            'last_name' => 'Estandard 4',
+            'first_name' => 'Laura',
+            'last_name' => 'Garcia',
             'email' => 'estandard_4@tareas.com',
             'password' => 'password',
         ],
