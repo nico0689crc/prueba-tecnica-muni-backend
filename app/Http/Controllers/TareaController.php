@@ -88,6 +88,6 @@ class TareaController extends Controller
     {
         $tarea->delete();
 
-        return response()->json(['message' => 'Tarea eliminada correctamente']);
+        return response()->json(['message' => 'Tarea eliminada correctamente',]);
     }
 }
