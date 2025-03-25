@@ -93,6 +93,7 @@ class TareaController extends Controller
 
     public function addUser(Request $request, Tarea $tarea, $userId)
     {
+        $tarea->update(['estado' => 'en_progreso']);
         $tarea->usuarios()->attach($userId, ['estado' => 'pendiente']);
 
         return response()->json(['message' => 'Usuario añadido correctamente',]);

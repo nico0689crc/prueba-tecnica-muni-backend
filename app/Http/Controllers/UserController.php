@@ -10,13 +10,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $pageSize = $request->query('pagesize', 10);
-        $pageSize = is_numeric($pageSize) && $pageSize > 0 ? (int)$pageSize : 10;
-
-        $currentPage = $request->query('page', 1);
-        $currentPage = is_numeric($currentPage) && $currentPage > 0 ? (int)$currentPage : 1;
-
-        $users = User::paginate($pageSize, ['*'], 'page', $currentPage);
+        $users = User::all();
 
         return response()->json($users);
     }

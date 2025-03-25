@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('usuarios')->group(function () {
-        Route::get('', [UserController::class, 'index'])->name('usuarios.index')->middleware('can:viewAny,App\Models\User');
+        Route::get('', [UserController::class, 'index'])->name('usuarios.index');
         Route::get('{user}', [UserController::class, 'show'])->name('usuarios.show')->middleware('can:view,user');
         Route::put('{user}', [UserController::class, 'update'])->name('usuarios.update')->middleware('can:update,user');
         Route::delete('{user}', [UserController::class, 'destroy'])->name('usuarios.destroy')->middleware('can:delete,user');
