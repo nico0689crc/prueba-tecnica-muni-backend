@@ -42,6 +42,8 @@ class TareaController extends Controller
 
         $tarea = Tarea::create($validatedData);
 
+        $tarea->usuarios()->attach($request->user()->id, ['estado' => 'finalizado']);
+
         return response()->json($tarea, 201);
     }
 
