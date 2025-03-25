@@ -73,7 +73,7 @@ class TareaController extends Controller
 
             if ($tareasFinalizadasCount > 0) {
                 return response()->json([
-                    'message' => 'No se puede marcar la tarea como completada hasta que todos los usuarios asignados hayan confirmado.'
+                    'message' => 'No se puede marcar la tarea como completada hasta que todos los usuarios asignados hayan finalizado.'
                 ], 400);
             }
         }
@@ -89,5 +89,32 @@ class TareaController extends Controller
         $tarea->delete();
 
         return response()->json(['message' => 'Tarea eliminada correctamente',]);
+    }
+
+    public function addUser(Request $request, Tarea $tarea, $userId)
+    {
+        $tarea->usuarios()->attach($userId, ['estado' => 'pendiente']);
+
+        return response()->json(['message' => 'Usuario añadido correctamente',]);
+    }   
+
+    public function removeUser(Request $request, Tarea $tarea, $userId)
+    {
+        $tarea->usuarios()->detach($userId);
+
+        return response()->json(['message' => 'Usuario eliminado correctamente',]);
+    }
+
+    public function estado(Request $request, Tarea $tarea, $userId)
+    {
+        $request->validate([
+            'estado' => 'required|in:pendiente,en_progreso,finalizado',
+        ], [
+            'estado.in' => 'El estado debe ser uno de los siguientes valores: pendiente, en_progreso, finalizado.',
+        ]);
+
+        $tarea->usuarios()->updateExistingPivot($userId, ['estado' => $request->estado]);
+
+        return response()->json(['message' => 'Estado actualizado correctamente',]);
     }
 }

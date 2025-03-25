@@ -22,6 +22,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('', [TareaController::class, 'store'])->name('tareas.store')->middleware('can:create,App\Models\Tarea');
         Route::put('{tarea}', [TareaController::class, 'update'])->name('tareas.update')->middleware('can:update,tarea');
         Route::delete('{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy')->middleware('can:delete,tarea');
+
+        Route::prefix('{tarea}/usuarios')->group(function () {
+            Route::post('{user}', [TareaController::class, 'addUser'])->name('tareas.usuarios.add')->middleware('can:update,tarea');
+            Route::delete('{user}', [TareaController::class, 'removeUser'])->name('tareas.usuarios.remove')->middleware('can:update,tarea');
+            Route::put('{user}/estado', [TareaController::class, 'estado'])->name('tareas.usuarios.estado')->middleware('can:update,tarea');
+        });
     });
 
     Route::prefix('usuarios')->group(function () {
