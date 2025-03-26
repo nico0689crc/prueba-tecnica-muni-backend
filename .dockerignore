@@ -1,0 +1,21 @@
+# Ignore node_modules and vendor directories
+node_modules
+vendor
+
+# Ignore log files
+storage/logs/*.log
+
+# Ignore compiled files
+/public/hot
+/public/storage
+/public/*.js
+/public/*.css
+/public/mix-manifest.json
+
+# Ignore IDE and editor files
+.idea
+.vscode
+*.swp
+
+# Ignore Docker-related files
+docker-compose.override.yml

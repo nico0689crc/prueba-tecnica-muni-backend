@@ -10,7 +10,11 @@ class UsersSeeder extends Seeder
 {
     public function run()
     {
-      $users = [
+        if(User::count() > 0){
+            return;
+        }
+
+        $users = [
         [
             'first_name' => 'Jose Admin',
             'last_name' => 'Gonzalez',
@@ -42,11 +46,11 @@ class UsersSeeder extends Seeder
             'email' => 'estandard_4@tareas.com',
             'password' => 'password',
         ],
-      ];
+        ];
 
-      foreach ($users as $user) {
-          $user['password'] = Hash::make($user['password']);
-          User::create($user);
-      }
+        foreach ($users as $user) {
+        $user['password'] = Hash::make($user['password']);
+        User::create($user);
+        }
     }
 }

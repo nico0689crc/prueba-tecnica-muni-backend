@@ -8,14 +8,16 @@ use App\Models\User;
 use App\Models\Tarea;
 use Carbon\Carbon; 
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class UsuariosTareasSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        if(DB::table('usuarios_tareas')->count() > 0) {
+            return;
+        }
+
         $faker = Faker::create();
         $tareas = Tarea::all();
 

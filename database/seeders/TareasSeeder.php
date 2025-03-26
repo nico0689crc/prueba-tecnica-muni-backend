@@ -9,11 +9,12 @@ use Faker\Factory as Faker;
 
 class TareasSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 */
 	public function run(): void
 	{
+		if(Tarea::count() > 0){
+				return;
+		}
+
 		$faker = Faker::create();
 
 		$tareas = [

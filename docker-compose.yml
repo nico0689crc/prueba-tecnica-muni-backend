@@ -1,0 +1,42 @@
+services:
+  #########################################
+  #   Setup Database container
+  #########################################
+  database:
+    container_name: municipalidad-database-dev
+    image: mysql:8.3.0
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT_HOST}:${DB_PORT}"
+    volumes:
+      - municipalidad-dev-db:/var/lib/mysql
+    networks:
+      - municipalidad-app-network-dev
+  #########################################
+  #   Setup Laravel App container
+  ######################################### 
+  app:
+    depends_on:
+      - database
+    container_name: municipalidad-backend-dev
+    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_APP_IMAGE}:dev
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/var/www
+      - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
+    expose:
+      - ${BACKEND_CONTAINER_PORT}
+    networks:
+      - municipalidad-app-network-dev
+networks:
+  municipalidad-app-network-dev:
+volumes:
+  municipalidad-dev-db:
