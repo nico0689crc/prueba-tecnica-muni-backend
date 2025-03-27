@@ -16,20 +16,16 @@ El objetivo de este proyecto es desarrollar un sistema de gestión de tareas que
 
 ## Tecnologías Utilizadas
 
-- **Backend**: PHP con XAMPP.
+- **Backend**: PHP con Laravel 12.
 - **Base de Datos**: MySQL.
-- **Frontend**: HTML, CSS, JavaScript.
 
 ## Instalación
-1. Inicia el servidor Apache y MySQL desde el panel de control de XAMPP.
+1. Inicia el servidor MySQL.
 2. Clona este repositorio en tu máquina local:
   ```bash
-  git clone https://github.com/tu-usuario/tu-repositorio.git
+  git clone https://github.com/nico0689crc/prueba-tecnica-muni-backend
   ```
-3. Configura el entorno en XAMPP:
-  - Copia los archivos del proyecto en el directorio `htdocs`.
-
-4. Instala las dependencias de Laravel:
+3. Instala las dependencias de Laravel:
   - Abre una terminal en el directorio del proyecto.
   - Ejecuta el siguiente comando para instalar las dependencias:
     ```bash
@@ -57,7 +53,7 @@ El objetivo de este proyecto es desarrollar un sistema de gestión de tareas que
       ```bash
       composer dev
       ```
-    - Accede al sistema desde tu navegador en `http://127.0.0.1:8000`.
+    - Accede al sistema desde tu navegador en `http://localhost:8000`.
 
 ## Licencia
 
