@@ -1,9 +1,11 @@
+version: '3.8'
+
 services:
   #########################################
   #   Setup Database container
   #########################################
   database:
-    container_name: municipalidad-database-dev
+    container_name: municipalidad-database-prod
     image: mysql:8.3.0
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -13,24 +15,27 @@ services:
     ports:
       - "${DB_PORT_HOST}:${DB_PORT}"
     volumes:
-      - municipalidad-dev-db:/var/lib/mysql
+      - municipalidad-prod-db:/var/lib/mysql
     networks:
-      - municipalidad-app-network-dev
+      - municipalidad-app-network-prod
   #########################################
   #   Setup Laravel App container
-  ######################################### 
+  #########################################
   app:
     depends_on:
       - database
-    container_name: municipalidad-backend-dev
-    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_APP_IMAGE}:dev
+    container_name: municipalidad-backend-prod
+    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_APP_IMAGE}:prod
     build:
       context: .
-      target: development
+      target: production
     volumes:
       - .:/var/www
       - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
     environment:
+      - APP_ENV="production"
       - APP_NAME=${APP_NAME}
       - DB_CONNECTION=${DB_CONNECTION}
       - DB_HOST=${DB_HOST}
@@ -38,13 +43,9 @@ services:
       - DB_DATABASE=${DB_DATABASE}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
-    expose:
-      - ${BACKEND_CONTAINER_PORT}
     networks:
-      - municipalidad-app-network-dev
+      - municipalidad-app-network-prod
 networks:
-  municipalidad-app-network-dev:
+  municipalidad-app-network-prod:
 volumes:
-  municipalidad-dev-db:
+  municipalidad-prod-db:
