@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('{user}', [UserController::class, 'show'])->name('usuarios.show')->middleware('can:view,user');
         Route::put('{user}', [UserController::class, 'update'])->name('usuarios.update')->middleware('can:update,user');
         Route::delete('{user}', [UserController::class, 'destroy'])->name('usuarios.destroy')->middleware('can:delete,user');
+        Route::post('', [UserController::class, 'store'])->name('usuarios.store')->middleware('can:create,App\Models\User');
     });
 });
 

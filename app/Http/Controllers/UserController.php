@@ -22,6 +22,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
+            'role' => 'sometimes|string|in:admin,standard',
         ], [
             'first_name.required' => 'El nombre es obligatorio.',
             'first_name.string' => 'El nombre debe ser una cadena de texto.',
@@ -35,6 +36,9 @@ class UserController extends Controller
             'password.required' => 'La contraseña es obligatoria.',
             'password.string' => 'La contraseña debe ser una cadena de texto.',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'role.sometimes' => 'El rol es opcional.',
+            'role.string' => 'El rol debe ser una cadena de texto.',
+            'role.in' => 'El rol debe ser admin o standard.',
         ]);
 
         $user = User::create([
@@ -42,6 +46,7 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role ?? 'standard',
         ]);
 
         return response()->json($user, 201);
@@ -54,11 +59,20 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        if($user->email === 'administrador@tareas.com' && $request->role !== 'admin' ) {
+            return response()->json(['message' => 'No puedes actualizar el rol del administrador principal'], 403);
+        }
+
+        if($user->email === 'administrador@tareas.com' && $request->email !== 'administrador@tareas.com') {
+            return response()->json(['message' => 'No puedes actualizar el email del administrador principal'], 403);
+        }
+
         $request->validate([
             'first_name' => 'sometimes|string|max:255',
             'last_name' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:users,email,' . $user->id,
             'password' => 'sometimes|string|min:8',
+            'role' => 'sometimes|string|in:admin,standard',
         ], [
             'first_name.sometimes' => 'El nombre es opcional.',
             'first_name.string' => 'El nombre debe ser una cadena de texto.',
@@ -72,13 +86,16 @@ class UserController extends Controller
             'password.sometimes' => 'La contraseña es opcional.',
             'password.string' => 'La contraseña debe ser una cadena de texto.',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'role.sometimes' => 'El rol es opcional.',
+            'role.string' => 'El rol debe ser una cadena de texto.',
+            'role.in' => 'El rol debe ser admin o standard.',
         ]);
 
         $user->update(array_filter([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => isset($request->password) ? Hash::make($request->password) : null,
+            'role' => $request->role ?? $user->role,
         ]));
 
         return response()->json($user);
@@ -86,6 +103,14 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if($user->email === 'administrador@tareas.com') {
+            return response()->json(['message' => 'No puedes eliminar al administrador principal'], 403);
+        }
+
+        if ($user->id === auth()->id()) {
+            return response()->json(['message' => 'No puedes eliminar tu propia cuenta'], 403);
+        }
+
         $user->delete();
 
         return response()->json(['message' => 'User deleted successfully']);
